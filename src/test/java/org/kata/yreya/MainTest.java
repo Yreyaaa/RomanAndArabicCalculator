@@ -93,6 +93,9 @@ class MainTest {
         String actualMessage = exception.getMessage();
         Assertions.assertEquals(expectedMessage, actualMessage);
     }
+
+    @org.junit.jupiter.api.Test
+
     public void testCalcNegative_5() {
 
         String input = "2+1";
