@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Main {
+
     // Словарь для конвертирования римских чисел в арабские
     final static HashMap<Character, Integer> romanMap = new HashMap<>(Map.of('I', 1, 'V', 5, 'X', 10, 'L', 50, 'C', 100));
 
@@ -22,8 +23,9 @@ public class Main {
     public static String calc(String input) throws Exception {
 
         // Удаляем лишние пробелы и разделяем ввод на отдельные элементы по пробелу
-        input = input.trim().replaceAll("\\s+", " ");
+        input = input.trim().replaceAll("\\s+", " ").toUpperCase();
         String[] parsedInput = input.split(" ");
+
 
         // Проверка ввода на валидность
         if (!inputIsValid(parsedInput)) {
@@ -55,8 +57,10 @@ public class Main {
     }
 
     private static boolean inputIsValid(String[] parsedInput) {
+
+
         if (parsedInput.length == 3) {
-            if (Character.isDigit(parsedInput[0].charAt(0)) && Character.isDigit(parsedInput[2].charAt(0))) {
+            if ((parsedInput[0].chars().allMatch(Character::isDigit)) && (parsedInput[2].chars().allMatch(Character::isDigit))) {
                 int x = Integer.parseInt(parsedInput[0]);
                 int y = Integer.parseInt(parsedInput[2]);
                 if (!((x >= 0 && x <= 10) && (y >= 0 && y <= 10))) {
