@@ -6,18 +6,17 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Main {
-    static HashMap<Character, Integer> romanMap = new HashMap<>();
-    static TreeMap<Integer, String> arabianMap = new TreeMap<>();
+    // Словарь для конвертирования римских чисел в арабские
+    final static HashMap<Character, Integer> romanMap = new HashMap<>(Map.of('I', 1, 'V', 5, 'X', 10, 'L', 50, 'C', 100));
+
+    // Словарь для конвертирования арабских чисел в римские
+    final static TreeMap<Integer, String> arabianMap = new TreeMap<>(Map.of(100, "C", 90, "XC", 50, "L", 40, "XL", 10, "X", 9, "IX", 5, "V", 4, "IV", 1, "I"));
 
     public static void main(String[] args) throws Exception {
-        // Словарь для конвертирования римских чисел в арабские
-        romanMap.putAll(Map.of('I', 1, 'V', 5, 'X', 10, 'L', 50, 'C', 100));
-
-        // Словарь для конвертирования арабских чисел в римские
-        arabianMap.putAll(Map.of(100, "C", 90, "XC", 50, "L", 40, "XL", 10, "X", 9, "IX", 5, "V", 4, "IV", 1, "I"));
 
         Scanner scanner = new Scanner(System.in);
         System.out.println(calc(scanner.nextLine()));
+
     }
 
     public static String calc(String input) throws Exception {
@@ -35,21 +34,13 @@ public class Main {
 
         char operator = parsedInput[1].charAt(0);
 
-        int result = -1;
-        switch (operator) {
-            case '+':
-                result = firstArgument + secondArgument;
-                break;
-            case '-':
-                result = firstArgument - secondArgument;
-                break;
-            case '*':
-                result = firstArgument * secondArgument;
-                break;
-            case '/':
-                result = firstArgument / secondArgument;
-                break;
-        }
+        int result = switch (operator) {
+            case '+' -> firstArgument + secondArgument;
+            case '-' -> firstArgument - secondArgument;
+            case '*' -> firstArgument * secondArgument;
+            case '/' -> firstArgument / secondArgument;
+            default -> -1;
+        };
 
         //Возвращаем результат в соответстви с форматом ввода
         if (Character.isDigit(parsedInput[0].charAt(0))) {
@@ -57,10 +48,9 @@ public class Main {
         } else if (result >= 1) {
             return arabicToRoman(result);
         } else {
-            throw new Exception("Полученно значение выражения с римскими числами меньше 1");
+            throw new Exception("C римскими числами полученно значение выражения меньше 1");
         }
     }
-
 
     private static boolean inputIsValid(String[] parsedInput) {
         if (parsedInput.length == 3) {
@@ -83,7 +73,7 @@ public class Main {
         return false;
     }
 
-    public static int romanToArabian(String roman) {
+    private static int romanToArabian(String roman) {
         int arabian;
         int result = romanMap.get(roman.charAt(roman.length() - 1));
         for (int i = roman.length() - 2; i >= 0; i--) {
