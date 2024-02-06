@@ -8,7 +8,7 @@ class MainTest {
     @org.junit.jupiter.api.Test
     public void testCalcPositive_1() throws Exception {
 
-        String input = "3 + 8";
+        String input = "  3 +    8 ";
 
         String expected = "11";
 
@@ -90,6 +90,16 @@ class MainTest {
         Exception exception = Assertions.assertThrows(Exception.class, () -> Main.calc(input));
 
         String expectedMessage = "C римскими числами полученно значение выражения меньше 1";
+        String actualMessage = exception.getMessage();
+        Assertions.assertEquals(expectedMessage, actualMessage);
+    }
+    public void testCalcNegative_5() {
+
+        String input = "2+1";
+
+        Exception exception = Assertions.assertThrows(Exception.class, () -> Main.calc(input));
+
+        String expectedMessage = "Неверный формат ввода, пример корректных входных данных: 3 + 6 или X * IV";
         String actualMessage = exception.getMessage();
         Assertions.assertEquals(expectedMessage, actualMessage);
     }

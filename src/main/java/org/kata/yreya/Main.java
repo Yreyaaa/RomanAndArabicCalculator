@@ -20,15 +20,17 @@ public class Main {
     }
 
     public static String calc(String input) throws Exception {
-        // Разделяем ввод на отдельные элементы по пробелу
+
+        // Удаляем лишние пробелы и разделяем ввод на отдельные элементы по пробелу
+        input = input.trim().replaceAll("\\s+", " ");
         String[] parsedInput = input.split(" ");
 
-        //Проверка на валидность ввода
+        // Проверка ввода на валидность
         if (!inputIsValid(parsedInput)) {
             throw new Exception("Неверный формат ввода, пример корректных входных данных: 3 + 6 или X * IV");
         }
 
-        //Получаем аргументы для вычисления в арабском формате
+        // Получаем аргументы для вычисления в арабском формате
         int firstArgument = Character.isDigit(parsedInput[0].charAt(0)) ? Integer.parseInt(parsedInput[0]) : romanToArabian(parsedInput[0]);
         int secondArgument = Character.isDigit(parsedInput[2].charAt(0)) ? Integer.parseInt(parsedInput[2]) : romanToArabian(parsedInput[2]);
 
@@ -42,7 +44,7 @@ public class Main {
             default -> -1;
         };
 
-        //Возвращаем результат в соответстви с форматом ввода
+        // Возвращаем результат в соответстви с форматом ввода
         if (Character.isDigit(parsedInput[0].charAt(0))) {
             return String.valueOf(result);
         } else if (result >= 1) {
@@ -74,6 +76,8 @@ public class Main {
     }
 
     private static int romanToArabian(String roman) {
+
+        //Конвентируем римское чисто в арабское
         int arabian;
         int result = romanMap.get(roman.charAt(roman.length() - 1));
         for (int i = roman.length() - 2; i >= 0; i--) {
@@ -88,6 +92,8 @@ public class Main {
     }
 
     private static String arabicToRoman(int arabian) {
+
+        //Конвентируем арабское чисто в римское
         StringBuilder roman = new StringBuilder();
         while (arabian != 0) {
             roman.append(arabianMap.get(arabianMap.floorKey(arabian)));
